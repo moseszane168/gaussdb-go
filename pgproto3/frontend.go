@@ -479,15 +479,3 @@ func (f *Frontend) ReadBufferLen() int {
 func (f *Frontend) SetMaxBodyLen(maxBodyLen int) {
 	f.maxBodyLen = maxBodyLen
 }
-
-func (f *Frontend) GetCR() *chunkReader {
-	return f.cr
-}
-
-func (f *Frontend) SetAuthType(authType uint32) {
-	f.authType = authType
-}
-
-func (cr *chunkReader) SetBuf(buf *[]byte) {
-	cr.buf = buf
-}

@@ -413,7 +413,7 @@ func connectOne(ctx context.Context, config *Config, connectConfig *connectOneCo
 				return nil, newPerDialConnectError("failed SASL auth", err)
 			}
 		case *pgproto3.AuthenticationSHA256:
-			err = pgConn.scramSha256Auth(msg.AuthMechanisms, msg.GetR())
+			err = pgConn.scramSha256Auth(msg.GetR())
 			if err != nil {
 				pgConn.conn.Close()
 				return nil, newPerDialConnectError("failed SASL SHA256 auth", err)
@@ -2515,9 +2515,4 @@ func md5s(s string) string {
 	h := md5.New()
 	h.Write([]byte(s))
 	return fmt.Sprintf("%x", h.Sum(nil))
-}
-
-func (pgConn *PgConn) sendStartupPacket(m *writeBuf) error {
-	_, err := pgConn.conn.Write((m.wrap())[1:])
-	return err
 }

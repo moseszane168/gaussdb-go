@@ -3,7 +3,6 @@ package pgconn
 import (
 	"bytes"
 	"encoding/binary"
-	//"gitee.com/opengauss/openGauss-connector-go-pq/oid"
 )
 
 type readBuf []byte
@@ -14,12 +13,6 @@ func (b *readBuf) int32() (n int) {
 	return
 }
 
-/*func (b *readBuf) oid() (n oid.Oid) {
-	n = oid.Oid(binary.BigEndian.Uint32(*b))
-	*b = (*b)[4:]
-	return
-}*/
-
 // N.B: this is actually an unsigned 16-bit integer, unlike int32
 func (b *readBuf) int16() (n int) {
 	n = int(binary.BigEndian.Uint16(*b))
@@ -29,9 +22,6 @@ func (b *readBuf) int16() (n int) {
 
 func (b *readBuf) string() string {
 	i := bytes.IndexByte(*b, 0)
-	if i < 0 {
-		//errorf("invalid message format; expected string terminator")
-	}
 	s := (*b)[:i]
 	*b = (*b)[i+1:]
 	return string(s)

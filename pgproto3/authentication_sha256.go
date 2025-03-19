@@ -71,8 +71,8 @@ func (src AuthenticationSHA256) MarshalJSON() ([]byte, error) {
 		Type           string
 		AuthMechanisms []string
 	}{
-		Type: "AuthenticationSASL",
-		//AuthMechanisms: src.AuthMechanisms,
+		Type:           "AuthenticationSASL",
+		AuthMechanisms: src.AuthMechanisms,
 	})
 }
 

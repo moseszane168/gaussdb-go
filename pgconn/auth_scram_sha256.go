@@ -18,8 +18,6 @@ import (
 	"github.com/jackc/pgx/v5/pgproto3"
 )
 
-const clientSha256NonceLen = 18
-
 func (c *PgConn) authSha256(r *readBuf) (*writeBuf, error) {
 	if r.int32() != pgproto3.AuthTypeSHA256 {
 		return nil, errors.New("bad auth type")
@@ -64,7 +62,7 @@ func (c *PgConn) authSha256(r *readBuf) (*writeBuf, error) {
 }
 
 // Perform SCRAM authentication.
-func (c *PgConn) scramSha256Auth(serverAuthMechanisms []string, r *pgproto3.ReadBuf) error {
+func (c *PgConn) scramSha256Auth(r *pgproto3.ReadBuf) error {
 	w, err := c.authSha256((*readBuf)(r))
 	if err != nil {
 		return err
