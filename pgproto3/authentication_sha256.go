@@ -35,8 +35,6 @@ func (dst *AuthenticationSHA256) Decode(src []byte) error {
 		return errors.New("bad auth type")
 	}
 
-	//authMechanisms := src[4:]
-
 	readBuf := ReadBuf(src)
 	dst.r = &readBuf
 
@@ -78,10 +76,6 @@ func (src AuthenticationSHA256) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// todo ---------- GaussDB start ----------
-
 func (dst *AuthenticationSHA256) GetR() *ReadBuf {
 	return dst.r
 }
-
-// todo ---------- GaussDB end ----------

@@ -10,9 +10,8 @@ import (
 	"github.com/jackc/pgx/v5/internal/pgio"
 )
 
-// todo GaussDB
-// const ProtocolVersionNumber = 196608 // 3.0
-const ProtocolVersionNumber = 196659 // 3.0
+// const ProtocolVersionNumber = 196608 // 3
+const ProtocolVersionNumber = 196659 // 51
 
 type StartupMessage struct {
 	ProtocolVersion uint32
