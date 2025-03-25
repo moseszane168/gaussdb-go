@@ -972,6 +972,8 @@ func TestDomainType(t *testing.T) {
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
 		pgxtest.SkipCockroachDB(t, conn, "Server does support domain types (https://github.com/cockroachdb/cockroach/issues/27796)")
 
+		pgxtest.SkipGaussDB(t, conn)
+
 		// Domain type uint64 is a PostgreSQL domain of underlying type numeric.
 
 		// In the extended protocol preparing "select $1::uint64" appears to create a statement that expects a param OID of
