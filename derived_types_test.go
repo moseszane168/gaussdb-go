@@ -2,6 +2,7 @@ package pgx_test
 
 import (
 	"context"
+	"github.com/jackc/pgx/v5/pgxtest"
 	"testing"
 
 	"github.com/jackc/pgx/v5"
@@ -23,6 +24,8 @@ create type dtype_test as (
   c anotheruint64,
   d anotheruint64[]
 );`)
+		pgxtest.SkipGaussDB(t, conn)
+
 		require.NoError(t, err)
 		defer conn.Exec(ctx, "drop type dtype_test")
 		defer conn.Exec(ctx, "drop domain anotheruint64")
