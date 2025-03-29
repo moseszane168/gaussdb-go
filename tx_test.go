@@ -154,6 +154,8 @@ func TestTxCommitSerializationFailure(t *testing.T) {
 	c1 := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, c1)
 
+	pgxtest.SkipGaussDB(t, c1, "Skipping test for GaussDB (Serializable not supported).")
+
 	if c1.PgConn().ParameterStatus("crdb_version") != "" {
 		t.Skip("Skipping due to known server issue: (https://github.com/cockroachdb/cockroach/issues/60754)")
 	}
