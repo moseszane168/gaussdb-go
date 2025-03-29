@@ -48,6 +48,12 @@ func TestConnCopyWithAllQueryExecModes(t *testing.T) {
 				t.Errorf("Expected CopyFrom to return %d copied rows, but got %d", len(inputRows), copyCount)
 			}
 
+			// 设置会话时区为输入时间的时区
+			_, offset := tzedTime.Zone()
+			offsetHours := offset / 3600
+			tzOffset := fmt.Sprintf("%+d", offsetHours)
+			mustExec(t, conn, fmt.Sprintf("SET TIME ZONE '%s'", tzOffset)) // 注意：此处应为 TIME ZONE，原代码可能有拼写错误
+
 			rows, err := conn.Query(ctx, "select * from foo")
 			if err != nil {
 				t.Errorf("Unexpected error for Query: %v", err)
