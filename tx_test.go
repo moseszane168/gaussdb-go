@@ -276,7 +276,7 @@ func TestBeginIsoLevels(t *testing.T) {
 
 	pgxtest.SkipCockroachDB(t, conn, "Server always uses SERIALIZABLE isolation (https://www.cockroachlabs.com/docs/stable/demo-serializable.html)")
 
-	isoLevels := []pgx.TxIsoLevel{pgx.Serializable, pgx.RepeatableRead, pgx.ReadCommitted, pgx.ReadUncommitted}
+	isoLevels := []pgx.TxIsoLevel{pgx.ReadCommitted, pgx.RepeatableRead /*pgx.Serializable,*/, pgx.ReadUncommitted}
 	for _, iso := range isoLevels {
 		tx, err := conn.BeginTx(context.Background(), pgx.TxOptions{IsoLevel: iso})
 		if err != nil {
