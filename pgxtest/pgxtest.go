@@ -155,7 +155,7 @@ func SkipCockroachDB(t testing.TB, conn *pgx.Conn, msg string) {
 	}
 }
 
-func SkipGaussDB(t testing.TB, conn *pgx.Conn) {
+func SkipGaussDB(t testing.TB, conn *pgx.Conn, msg string) {
 	var dbName string
 	err := conn.QueryRow(context.Background(), "SELECT current_database()").Scan(&dbName)
 	if err != nil {
@@ -170,7 +170,7 @@ func SkipGaussDB(t testing.TB, conn *pgx.Conn) {
 	}
 
 	if strings.Contains(version, "GaussDB") || strings.Contains(dbName, "gaussdb") {
-		t.Skip("Skipping test for GaussDB (Domain Types not supported)")
+		t.Skip(msg)
 	}
 }
 
