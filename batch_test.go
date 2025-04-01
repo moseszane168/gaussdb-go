@@ -22,7 +22,6 @@ func TestConnSendBatch(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server serial type is incompatible with test")
 
 		sql := `create temporary table ledger(
 	  id serial primary key,
@@ -160,7 +159,6 @@ func TestConnSendBatchQueuedQuery(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server serial type is incompatible with test")
 
 		sql := `create temporary table ledger(
 	  id serial primary key,
@@ -343,7 +341,6 @@ func TestConnSendBatchWithPreparedStatement(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, modes, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server issues incorrect ParameterDescription (https://github.com/cockroachdb/cockroach/issues/60907)")
 		_, err := conn.Prepare(ctx, "ps1", "select n from generate_series(0,$1::int) n")
 		if err != nil {
 			t.Fatal(err)
@@ -435,8 +432,6 @@ func TestConnSendBatchWithPreparedStatementAndStatementCacheDisabled(t *testing.
 
 	conn := mustConnect(t, config)
 	defer closeConn(t, conn)
-
-	pgxtest.SkipCockroachDB(t, conn, "Server issues incorrect ParameterDescription (https://github.com/cockroachdb/cockroach/issues/60907)")
 
 	_, err = conn.Prepare(ctx, "ps1", "select n from generate_series(0,$1::int) n")
 	if err != nil {
@@ -856,8 +851,6 @@ func TestConnBeginBatchDeferredError(t *testing.T) {
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
 
-		pgxtest.SkipCockroachDB(t, conn, "Server does not support deferred constraint (https://github.com/cockroachdb/cockroach/issues/31632)")
-
 		mustExec(t, conn, `create temporary table t (
 		id text primary key,
 		n int not null,
@@ -1016,7 +1009,6 @@ func TestConnSendBatchErrorDoesNotLeaveOrphanedPreparedStatement(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server serial type is incompatible with test")
 
 		mustExec(t, conn, `create temporary table foo(col1 text primary key);`)
 

@@ -130,8 +130,6 @@ func TestNumericCodec(t *testing.T) {
 }
 
 func TestNumericCodecInfinity(t *testing.T) {
-	skipCockroachDB(t, "server formats numeric text format differently")
-	skipPostgreSQLVersionLessThan(t, 14)
 
 	pgxtest.RunValueRoundTripTests(context.Background(), t, defaultConnTestRunner, nil, "numeric", []pgxtest.ValueRoundTripTest{
 		{math.Inf(1), new(float64), isExpectedEq(math.Inf(1))},

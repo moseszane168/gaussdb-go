@@ -95,9 +95,7 @@ func TestTextCodecBPChar(t *testing.T) {
 // It only supports the text format.
 func TestTextCodecACLItem(t *testing.T) {
 	ctr := defaultConnTestRunner
-	ctr.AfterConnect = func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does not support type aclitem")
-	}
+	ctr.AfterConnect = func(ctx context.Context, t testing.TB, conn *pgx.Conn) {}
 
 	pgxtest.RunValueRoundTripTests(context.Background(), t, ctr, nil, "aclitem", []pgxtest.ValueRoundTripTest{
 		{
@@ -113,7 +111,6 @@ func TestTextCodecACLItem(t *testing.T) {
 func TestTextCodecACLItemRoleWithSpecialCharacters(t *testing.T) {
 	ctr := defaultConnTestRunner
 	ctr.AfterConnect = func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does not support type aclitem")
 
 		// The tricky test user, below, has to actually exist so that it can be used in a test
 		// of aclitem formatting. It turns out aclitems cannot contain non-existing users/roles.

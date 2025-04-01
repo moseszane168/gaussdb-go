@@ -568,8 +568,6 @@ func TestConnCopyFromFailServerSideMidwayAbortsWithoutWaiting(t *testing.T) {
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
 
-	pgxtest.SkipCockroachDB(t, conn, "Server copy error does not fail fast")
-
 	mustExec(t, conn, `create temporary table foo(
 		a bytea not null
 	)`)

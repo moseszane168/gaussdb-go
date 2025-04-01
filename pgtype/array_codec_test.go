@@ -9,7 +9,6 @@ import (
 
 	pgx "github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/jackc/pgx/v5/pgxtest"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -87,9 +86,7 @@ func TestArrayCodecFlatArrayString(t *testing.T) {
 
 func TestArrayCodecArray(t *testing.T) {
 	ctr := defaultConnTestRunner
-	ctr.AfterConnect = func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does not support multi-dimensional arrays")
-	}
+	ctr.AfterConnect = func(ctx context.Context, t testing.TB, conn *pgx.Conn) {}
 
 	ctr.RunTest(context.Background(), t, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
 		for i, tt := range []struct {

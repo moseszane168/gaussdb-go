@@ -12,7 +12,6 @@ import (
 func TestLineTranscode(t *testing.T) {
 	ctr := defaultConnTestRunner
 	ctr.AfterConnect = func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does not support type line")
 
 		if _, ok := conn.TypeMap().TypeForName("line"); !ok {
 			t.Skip("Skipping due to no line type")

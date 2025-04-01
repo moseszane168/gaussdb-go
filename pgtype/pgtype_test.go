@@ -10,8 +10,6 @@ import (
 	"net"
 	"os"
 	"reflect"
-	"regexp"
-	"strconv"
 	"testing"
 
 	"github.com/jackc/pgx/v5"
@@ -93,28 +91,6 @@ func skipCockroachDB(t testing.TB, msg string) {
 
 	if conn.PgConn().ParameterStatus("crdb_version") != "" {
 		t.Skip(msg)
-	}
-}
-
-func skipPostgreSQLVersionLessThan(t testing.TB, minVersion int64) {
-	conn, err := pgx.Connect(context.Background(), os.Getenv("PGX_TEST_DATABASE"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer conn.Close(context.Background())
-
-	serverVersionStr := conn.PgConn().ParameterStatus("server_version")
-	serverVersionStr = regexp.MustCompile(`^[0-9]+`).FindString(serverVersionStr)
-	// if not PostgreSQL do nothing
-	if serverVersionStr == "" {
-		return
-	}
-
-	serverVersion, err := strconv.ParseInt(serverVersionStr, 10, 64)
-	require.NoError(t, err)
-
-	if serverVersion < minVersion {
-		t.Skipf("Test requires PostgreSQL v%d+", minVersion)
 	}
 }
 

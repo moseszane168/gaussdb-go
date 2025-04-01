@@ -757,7 +757,6 @@ func TestPointerPointer(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server auto converts ints to bigint and test relies on exact types")
 
 		type allTypes struct {
 			s   *string

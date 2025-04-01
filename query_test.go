@@ -293,8 +293,6 @@ func TestRowsScanDoesNotAllowScanningBinaryFormatValuesIntoString(t *testing.T) 
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
 
-	pgxtest.SkipCockroachDB(t, conn, "Server does not support point type")
-
 	var s string
 
 	err := conn.QueryRow(context.Background(), "select point(1,2)").Scan(&s)
@@ -501,8 +499,6 @@ func TestConnQueryDeferredError(t *testing.T) {
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
 
-	pgxtest.SkipCockroachDB(t, conn, "Server does not support deferred constraint (https://github.com/cockroachdb/cockroach/issues/31632)")
-
 	mustExec(t, conn, `create temporary table t (
 	id text primary key,
 	n int not null,
@@ -542,8 +538,6 @@ func TestConnQueryErrorWhileReturningRows(t *testing.T) {
 
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
-
-	pgxtest.SkipCockroachDB(t, conn, "Server uses numeric instead of int")
 
 	for i := 0; i < 100; i++ {
 		func() {
@@ -1489,8 +1483,6 @@ func TestQueryContextErrorWhileReceivingRows(t *testing.T) {
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
 
-	pgxtest.SkipCockroachDB(t, conn, "Server uses numeric instead of int")
-
 	ctx, cancelFunc := context.WithCancel(context.Background())
 	defer cancelFunc()
 
@@ -2011,8 +2003,6 @@ func TestConnSimpleProtocolRefusesNonUTF8ClientEncoding(t *testing.T) {
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
 
-	pgxtest.SkipCockroachDB(t, conn, "Server does not support changing client_encoding (https://www.cockroachlabs.com/docs/stable/set-vars.html)")
-
 	mustExec(t, conn, "set client_encoding to 'SQL_ASCII'")
 
 	var expected string
@@ -2034,8 +2024,6 @@ func TestConnSimpleProtocolRefusesNonStandardConformingStrings(t *testing.T) {
 
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
-
-	pgxtest.SkipCockroachDB(t, conn, "Server does not support standard_conforming_strings = off (https://github.com/cockroachdb/cockroach/issues/36215)")
 
 	mustExec(t, conn, "set standard_conforming_strings to off")
 
@@ -2094,8 +2082,6 @@ func TestConnQueryQueryExecModeCacheDescribeSafeEvenWhenTypesChange(t *testing.T
 
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
-
-	pgxtest.SkipCockroachDB(t, conn, "Server does not support alter column type from int to float4")
 
 	_, err := conn.Exec(ctx, `create temporary table to_change (
 	name text primary key,

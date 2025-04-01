@@ -9,7 +9,6 @@ import (
 	"math"
 	"os"
 	"reflect"
-	"regexp"
 	"strconv"
 	"sync"
 	"testing"
@@ -46,34 +45,6 @@ func skipCockroachDB(t testing.TB, db *sql.DB, msg string) {
 		if conn.PgConn().ParameterStatus("crdb_version") != "" {
 			t.Skip(msg)
 		}
-		return nil
-	})
-	require.NoError(t, err)
-}
-
-func skipPostgreSQLVersionLessThan(t testing.TB, db *sql.DB, minVersion int64) {
-	conn, err := db.Conn(context.Background())
-	require.NoError(t, err)
-	defer conn.Close()
-
-	err = conn.Raw(func(driverConn any) error {
-		conn := driverConn.(*stdlib.Conn).Conn()
-		serverVersionStr := conn.PgConn().ParameterStatus("server_version")
-		serverVersionStr = regexp.MustCompile(`^[0-9]+`).FindString(serverVersionStr)
-		// if not PostgreSQL do nothing
-		if serverVersionStr == "" {
-			return nil
-		}
-
-		serverVersion, err := strconv.ParseInt(serverVersionStr, 10, 64)
-		if err != nil {
-			return err
-		}
-
-		if serverVersion < minVersion {
-			t.Skipf("Test requires PostgreSQL v%d+", minVersion)
-		}
-
 		return nil
 	})
 	require.NoError(t, err)
@@ -1178,8 +1149,6 @@ func TestRegisterConnConfig(t *testing.T) {
 // https://github.com/jackc/pgx/issues/958
 func TestConnQueryRowConstraintErrors(t *testing.T) {
 	testWithAllQueryExecModes(t, func(t *testing.T, db *sql.DB) {
-		skipPostgreSQLVersionLessThan(t, db, 11)
-		skipCockroachDB(t, db, "Server does not support deferred constraint (https://github.com/cockroachdb/cockroach/issues/31632)")
 
 		_, err := db.Exec(`create temporary table defer_test (
 			id text primary key,

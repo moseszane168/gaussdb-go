@@ -107,8 +107,6 @@ func TestTxCommitWhenDeferredConstraintFailure(t *testing.T) {
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
 
-	pgxtest.SkipCockroachDB(t, conn, "Server does not support deferred constraint (https://github.com/cockroachdb/cockroach/issues/31632)")
-
 	createSql := `
     create temporary table foo(
       id integer,
@@ -273,8 +271,6 @@ func TestBeginIsoLevels(t *testing.T) {
 
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
-
-	pgxtest.SkipCockroachDB(t, conn, "Server always uses SERIALIZABLE isolation (https://www.cockroachlabs.com/docs/stable/demo-serializable.html)")
 
 	isoLevels := []pgx.TxIsoLevel{pgx.ReadCommitted, pgx.RepeatableRead /*pgx.Serializable,*/, pgx.ReadUncommitted}
 	for _, iso := range isoLevels {

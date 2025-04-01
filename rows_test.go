@@ -913,7 +913,6 @@ func TestRowToStructByNameLaxRowValue(t *testing.T) {
 	}
 
 	defaultConnTestRunner.RunTest(context.Background(), t, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "")
 
 		rows, _ := conn.Query(ctx, `
 		WITH user_api_keys AS (

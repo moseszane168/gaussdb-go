@@ -11,7 +11,6 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/jackc/pgx/v5/pgxtest"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -158,7 +157,6 @@ func TestPoolAcquireChecksIdleConns(t *testing.T) {
 	controllerConn, err := pgx.Connect(ctx, os.Getenv("PGX_TEST_DATABASE"))
 	require.NoError(t, err)
 	defer controllerConn.Close(ctx)
-	pgxtest.SkipCockroachDB(t, controllerConn, "Server does not support pg_terminate_backend() (https://github.com/cockroachdb/cockroach/issues/35897)")
 
 	pool, err := pgxpool.New(ctx, os.Getenv("PGX_TEST_DATABASE"))
 	require.NoError(t, err)

@@ -14,8 +14,6 @@ package pgx_test
 		t.Fatal(err)
 	}
 
-	pgxtest.SkipCockroachDB(t, conn, "Server does support large objects")
-
 	tx, err := conn.Begin(ctx)
 	if err != nil {
 		t.Fatal(err)
@@ -42,8 +40,6 @@ package pgx_test
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	pgxtest.SkipCockroachDB(t, conn, "Server does support large objects")
 
 	tx, err := conn.Begin(ctx)
 	if err != nil {
@@ -163,8 +159,6 @@ package pgx_test
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	pgxtest.SkipCockroachDB(t, conn, "Server does support large objects")
 
 	tx, err := conn.Begin(ctx)
 	if err != nil {

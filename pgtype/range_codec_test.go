@@ -41,9 +41,7 @@ func TestRangeCodecTranscode(t *testing.T) {
 
 func TestRangeCodecTranscodeCompatibleRangeElementTypes(t *testing.T) {
 	ctr := defaultConnTestRunner
-	ctr.AfterConnect = func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does not support range types (see https://github.com/cockroachdb/cockroach/issues/27791)")
-	}
+	ctr.AfterConnect = func(ctx context.Context, t testing.TB, conn *pgx.Conn) {}
 
 	pgxtest.RunValueRoundTripTests(context.Background(), t, ctr, nil, "numrange", []pgxtest.ValueRoundTripTest{
 		{

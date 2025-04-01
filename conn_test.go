@@ -668,7 +668,6 @@ func TestListenNotifyWhileBusyIsSafe(t *testing.T) {
 	func() {
 		conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 		defer closeConn(t, conn)
-		pgxtest.SkipCockroachDB(t, conn, "Server does not support LISTEN / NOTIFY (https://github.com/cockroachdb/cockroach/issues/41522)")
 	}()
 
 	listenerDone := make(chan bool)
@@ -745,8 +744,6 @@ func TestListenNotifySelfNotification(t *testing.T) {
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
 
-	pgxtest.SkipCockroachDB(t, conn, "Server does not support LISTEN / NOTIFY (https://github.com/cockroachdb/cockroach/issues/41522)")
-
 	mustExec(t, conn, "listen self")
 
 	// Notify self and WaitForNotification immediately
@@ -779,8 +776,6 @@ func TestFatalRxError(t *testing.T) {
 
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
-
-	pgxtest.SkipCockroachDB(t, conn, "Server does not support pg_terminate_backend() (https://github.com/cockroachdb/cockroach/issues/35897)")
 
 	var wg sync.WaitGroup
 	wg.Add(1)
@@ -818,8 +813,6 @@ func TestFatalTxError(t *testing.T) {
 		func() {
 			conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 			defer closeConn(t, conn)
-
-			pgxtest.SkipCockroachDB(t, conn, "Server does not support pg_terminate_backend() (https://github.com/cockroachdb/cockroach/issues/35897)")
 
 			otherConn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 			defer otherConn.Close(context.Background())
@@ -951,7 +944,6 @@ func TestUnregisteredTypeUsableAsStringArgumentAndBaseResult(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does support domain types (https://github.com/cockroachdb/cockroach/issues/27796)")
 
 		var n uint64
 		err := conn.QueryRow(context.Background(), "select $1::uint64", "42").Scan(&n)
@@ -971,7 +963,6 @@ func TestUnregisteredTypeUsableAsStringArgumentAndBaseResult(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does support domain types (https://github.com/cockroachdb/cockroach/issues/27796)")
 
 		// Domain type uint64 is a PostgreSQL domain of underlying type numeric.
 
@@ -1008,7 +999,6 @@ func TestLoadTypeSameNameInDifferentSchemas(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does support composite types (https://github.com/cockroachdb/cockroach/issues/27792)")
 
 		tx, err := conn.Begin(ctx)
 		require.NoError(t, err)
@@ -1053,7 +1043,6 @@ func TestLoadCompositeType(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does support composite types (https://github.com/cockroachdb/cockroach/issues/27792)")
 
 		tx, err := conn.Begin(ctx)
 		require.NoError(t, err)
@@ -1075,7 +1064,6 @@ func TestLoadRangeType(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does support range types")
 
 		tx, err := conn.Begin(ctx)
 		require.NoError(t, err)
@@ -1110,8 +1098,6 @@ func TestLoadRangeType(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "Server does support range types")
-		pgxtest.SkipPostgreSQLVersionLessThan(t, conn, 14) // multirange data type was added in 14 postgresql
 
 		tx, err := conn.Begin(ctx)
 		require.NoError(t, err)
@@ -1348,7 +1334,6 @@ func TestConnDeallocateInvalidatedCachedStatementsWhenCanceled(t *testing.T) {
 	defer cancel()
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
-		pgxtest.SkipCockroachDB(t, conn, "CockroachDB returns decimal instead of integer for integer division")
 
 		var n int32
 		err := conn.QueryRow(ctx, "select 1 / $1::int", 1).Scan(&n)
