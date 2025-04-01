@@ -1,15 +1,7 @@
 package pgx_test
 
-import (
-	"context"
-	"github.com/jackc/pgx/v5/pgxtest"
-	"testing"
-
-	"github.com/jackc/pgx/v5"
-	"github.com/stretchr/testify/require"
-)
-
-func TestCompositeCodecTranscodeWithLoadTypes(t *testing.T) {
+// todo GaussDB 暂时不支持 Domain域类型
+/*func TestCompositeCodecTranscodeWithLoadTypes(t *testing.T) {
 	skipCockroachDB(t, "Server does not support composite types (see https://github.com/cockroachdb/cockroach/issues/27792)")
 
 	defaultConnTestRunner.RunTest(context.Background(), t, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
@@ -40,4 +32,4 @@ create type dtype_test as (
 		require.Equal(t, types[4].Name, "public.dtype_test")
 		require.Equal(t, types[5].Name, "dtype_test")
 	})
-}
+}*/

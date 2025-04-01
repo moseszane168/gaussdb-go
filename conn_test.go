@@ -965,7 +965,8 @@ func TestUnregisteredTypeUsableAsStringArgumentAndBaseResult(t *testing.T) {
 	})
 }
 
-func TestDomainType(t *testing.T) {
+// todo GaussDB 暂时不支持 Domain域类型
+/*func TestDomainType(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
 	defer cancel()
 
@@ -1002,7 +1003,7 @@ func TestDomainType(t *testing.T) {
 			t.Fatalf("Expected n to be 7, but was %v", n)
 		}
 	})
-}
+}*/
 
 func TestLoadTypeSameNameInDifferentSchemas(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
