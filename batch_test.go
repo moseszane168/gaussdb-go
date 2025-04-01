@@ -1016,7 +1016,7 @@ func TestConnSendBatchErrorDoesNotLeaveOrphanedPreparedStatement(t *testing.T) {
 		batch.Queue("select col1 from foo")
 		batch.Queue("select col1 from baz")
 		err := conn.SendBatch(ctx, batch).Close()
-		require.EqualError(t, err, `ERROR: relation "baz" does not exist (SQLSTATE 42P01)`)
+		require.EqualError(t, err, `ERROR: Relation "baz" does not exist on dn_6001_6002_6003. (SQLSTATE 42P01)`)
 
 		mustExec(t, conn, `create temporary table baz(col1 text primary key);`)
 
