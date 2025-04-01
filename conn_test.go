@@ -614,7 +614,8 @@ func TestDeallocateMissingPreparedStatementStillClearsFromPreparedStatementMap(t
 	})
 }
 
-func TestListenNotify(t *testing.T) {
+// todo GaussDB 暂时不支持 LISTEN statement、NOFITY statement
+/*func TestListenNotify(t *testing.T) {
 	t.Parallel()
 
 	listener := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
@@ -660,9 +661,10 @@ func TestListenNotify(t *testing.T) {
 	notification, err = listener.WaitForNotification(context.Background())
 	require.NoError(t, err)
 	assert.Equal(t, "chat", notification.Channel)
-}
+}*/
 
-func TestListenNotifyWhileBusyIsSafe(t *testing.T) {
+// todo GaussDB 暂时不支持 LISTEN statement、NOFITY statement
+/*func TestListenNotifyWhileBusyIsSafe(t *testing.T) {
 	t.Parallel()
 
 	func() {
@@ -736,7 +738,7 @@ func TestListenNotifyWhileBusyIsSafe(t *testing.T) {
 
 	<-listenerDone
 	<-notifierDone
-}
+}*/
 
 // todo GaussDB 暂时不支持 LISTEN statement、NOFITY statement
 /*func TestListenNotifySelfNotification(t *testing.T) {
