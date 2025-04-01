@@ -756,7 +756,8 @@ func TestTxSendBatch(t *testing.T) {
 	})
 }
 
-func TestTxSendBatchRollback(t *testing.T) {
+// todo GaussDB 暂时不支持 临时表Serial自增序列
+/*func TestTxSendBatchRollback(t *testing.T) {
 	t.Parallel()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
@@ -792,7 +793,7 @@ func TestTxSendBatchRollback(t *testing.T) {
 		}
 
 	})
-}
+}*/
 
 // https://github.com/jackc/pgx/issues/1578
 func TestSendBatchErrorWhileReadingResultsWithoutCallback(t *testing.T) {
