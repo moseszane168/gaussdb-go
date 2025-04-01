@@ -738,7 +738,8 @@ func TestListenNotifyWhileBusyIsSafe(t *testing.T) {
 	<-notifierDone
 }
 
-func TestListenNotifySelfNotification(t *testing.T) {
+// todo GaussDB 暂时不支持 LISTEN statement、NOFITY statement
+/*func TestListenNotifySelfNotification(t *testing.T) {
 	t.Parallel()
 
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
@@ -769,7 +770,7 @@ func TestListenNotifySelfNotification(t *testing.T) {
 	notification, err = conn.WaitForNotification(ctx)
 	require.NoError(t, err)
 	assert.Equal(t, "self", notification.Channel)
-}
+}*/
 
 func TestFatalRxError(t *testing.T) {
 	t.Parallel()
