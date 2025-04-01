@@ -78,8 +78,6 @@ func TestConnQueryRowsFieldDescriptionsBeforeNext(t *testing.T) {
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
 	defer closeConn(t, conn)
 
-	pgxtest.SkipGaussDB(t, conn, "Skipping test for GaussDB (Serial not supported).")
-
 	rows, err := conn.Query(context.Background(), "create temporary table t (id serial);")
 	assert.NoError(t, err)
 	rows.Close()

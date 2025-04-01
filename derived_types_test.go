@@ -16,7 +16,6 @@ create type dtype_test as (
   c anotheruint64,
   d anotheruint64[]
 );`)
-		pgxtest.SkipGaussDB(t, conn, "Skipping test for GaussDB (Domain Types not supported).")
 
 		require.NoError(t, err)
 		defer conn.Exec(ctx, "drop type dtype_test")

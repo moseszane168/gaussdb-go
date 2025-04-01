@@ -973,8 +973,6 @@ func TestUnregisteredTypeUsableAsStringArgumentAndBaseResult(t *testing.T) {
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
 		pgxtest.SkipCockroachDB(t, conn, "Server does support domain types (https://github.com/cockroachdb/cockroach/issues/27796)")
 
-		pgxtest.SkipGaussDB(t, conn, "Skipping test for GaussDB (Domain Types not supported).")
-
 		// Domain type uint64 is a PostgreSQL domain of underlying type numeric.
 
 		// In the extended protocol preparing "select $1::uint64" appears to create a statement that expects a param OID of
@@ -1113,7 +1111,6 @@ func TestLoadRangeType(t *testing.T) {
 
 	pgxtest.RunWithQueryExecModes(ctx, t, defaultConnTestRunner, nil, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
 		pgxtest.SkipCockroachDB(t, conn, "Server does support range types")
-		pgxtest.SkipGaussDB(t, conn, "Skipping test for GaussDB (Multi Range Type not supported).")
 		pgxtest.SkipPostgreSQLVersionLessThan(t, conn, 14) // multirange data type was added in 14 postgresql
 
 		tx, err := conn.Begin(ctx)

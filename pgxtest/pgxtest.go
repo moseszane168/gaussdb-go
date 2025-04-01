@@ -7,7 +7,6 @@ import (
 	"reflect"
 	"regexp"
 	"strconv"
-	"strings"
 	"testing"
 
 	"github.com/jackc/pgx/v5"
@@ -151,25 +150,6 @@ func RunValueRoundTripTests(
 // SkipCockroachDB calls Skip on t with msg if the connection is to a CockroachDB server.
 func SkipCockroachDB(t testing.TB, conn *pgx.Conn, msg string) {
 	if conn.PgConn().ParameterStatus("crdb_version") != "" {
-		t.Skip(msg)
-	}
-}
-
-func SkipGaussDB(t testing.TB, conn *pgx.Conn, msg string) {
-	var dbName string
-	err := conn.QueryRow(context.Background(), "SELECT current_database()").Scan(&dbName)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	// 检查是否是 GaussDB（通过版本或特定标识）
-	var version string
-	err = conn.QueryRow(context.Background(), "SELECT version()").Scan(&version)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if strings.Contains(version, "GaussDB") || strings.Contains(dbName, "gaussdb") {
 		t.Skip(msg)
 	}
 }

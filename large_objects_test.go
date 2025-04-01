@@ -54,7 +54,6 @@ package pgx_test
 }*/
 
 /*func testLargeObjects(t *testing.T, ctx context.Context, tx pgx.Tx) {
-	pgxtest.SkipGaussDB(t, tx.Conn(), "Skipping test for GaussDB (Large Object not supported).")
 
 	lo := tx.LargeObjects()
 
@@ -164,8 +163,6 @@ package pgx_test
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	pgxtest.SkipGaussDB(t, conn, "Skipping test for GaussDB (Large Object not supported).")
 
 	pgxtest.SkipCockroachDB(t, conn, "Server does support large objects")
 
