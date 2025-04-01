@@ -71,7 +71,8 @@ func TestConnQueryRowsFieldDescriptionsBeforeNext(t *testing.T) {
 	assert.Equal(t, "msg", rows.FieldDescriptions()[0].Name)
 }
 
-func TestConnQueryWithoutResultSetCommandTag(t *testing.T) {
+// todo GaussDB 暂时不支持 临时表Serial自增序列
+/*func TestConnQueryWithoutResultSetCommandTag(t *testing.T) {
 	t.Parallel()
 
 	conn := mustConnectString(t, os.Getenv("PGX_TEST_DATABASE"))
@@ -84,7 +85,7 @@ func TestConnQueryWithoutResultSetCommandTag(t *testing.T) {
 	rows.Close()
 	assert.NoError(t, rows.Err())
 	assert.Equal(t, "CREATE TABLE", rows.CommandTag().String())
-}
+}*/
 
 func TestConnQueryScanWithManyColumns(t *testing.T) {
 	t.Parallel()
