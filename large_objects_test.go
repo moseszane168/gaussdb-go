@@ -1,18 +1,8 @@
 package pgx_test
 
-import (
-	"context"
-	"io"
-	"os"
-	"testing"
-	"time"
+// todo  GaussD 暂时不支持 Large Object
 
-	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgconn"
-	"github.com/jackc/pgx/v5/pgxtest"
-)
-
-func TestLargeObjects(t *testing.T) {
+/*func TestLargeObjects(t *testing.T) {
 	// We use a very short limit to test chunking logic.
 	pgx.SetMaxLargeObjectMessageLength(t, 2)
 
@@ -32,9 +22,9 @@ func TestLargeObjects(t *testing.T) {
 	}
 
 	testLargeObjects(t, ctx, tx)
-}
+}*/
 
-func TestLargeObjectsSimpleProtocol(t *testing.T) {
+/*func TestLargeObjectsSimpleProtocol(t *testing.T) {
 	// We use a very short limit to test chunking logic.
 	pgx.SetMaxLargeObjectMessageLength(t, 2)
 
@@ -61,9 +51,9 @@ func TestLargeObjectsSimpleProtocol(t *testing.T) {
 	}
 
 	testLargeObjects(t, ctx, tx)
-}
+}*/
 
-func testLargeObjects(t *testing.T, ctx context.Context, tx pgx.Tx) {
+/*func testLargeObjects(t *testing.T, ctx context.Context, tx pgx.Tx) {
 	pgxtest.SkipGaussDB(t, tx.Conn(), "Skipping test for GaussDB (Large Object not supported).")
 
 	lo := tx.LargeObjects()
@@ -161,9 +151,9 @@ func testLargeObjects(t *testing.T, ctx context.Context, tx pgx.Tx) {
 	if e, ok := err.(*pgconn.PgError); !ok || e.Code != "42704" {
 		t.Errorf("Expected undefined_object error (42704), got %#v", err)
 	}
-}
+}*/
 
-func TestLargeObjectsMultipleTransactions(t *testing.T) {
+/*func TestLargeObjectsMultipleTransactions(t *testing.T) {
 	// We use a very short limit to test chunking logic.
 	pgx.SetMaxLargeObjectMessageLength(t, 2)
 
@@ -307,4 +297,4 @@ func TestLargeObjectsMultipleTransactions(t *testing.T) {
 	if e, ok := err.(*pgconn.PgError); !ok || e.Code != "42704" {
 		t.Errorf("Expected undefined_object error (42704), got %#v", err)
 	}
-}
+}*/
