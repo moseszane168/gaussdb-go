@@ -3937,8 +3937,8 @@ func TestCancelRequestContextWatcherHandler(t *testing.T) {
 		config.BuildContextWatcherHandler = func(conn *gaussdbconn.GaussdbConn) ctxwatch.Handler {
 			return &gaussdbconn.CancelRequestContextWatcherHandler{
 				Conn:               conn,
-				CancelRequestDelay: 10000 * time.Millisecond, // purposely setting this higher than DeadlineDelay to ensure the cancel request never happens.
-				DeadlineDelay:      1000 * time.Millisecond,
+				CancelRequestDelay: 5000 * time.Millisecond, // purposely setting this higher than DeadlineDelay to ensure the cancel request never happens.
+				DeadlineDelay:      250 * time.Millisecond,
 			}
 		}
 		config.ConnectTimeout = 5 * time.Second
