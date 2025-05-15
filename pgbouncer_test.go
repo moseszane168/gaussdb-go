@@ -2,38 +2,12 @@ package gaussdbgo_test
 
 import (
 	"context"
-	"os"
 	"testing"
 
 	gaussdbgo "github.com/HuaweiCloudDeveloper/gaussdb-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
-
-func TestPgbouncerStatementCacheDescribe(t *testing.T) {
-	connString := os.Getenv(gaussdbgo.EnvGaussdbTestPgbouncerConnString)
-	if connString == "" {
-		t.Skipf("Skipping due to missing environment variable %v", gaussdbgo.EnvGaussdbTestPgbouncerConnString)
-	}
-
-	config := mustParseConfig(t, connString)
-	config.DefaultQueryExecMode = gaussdbgo.QueryExecModeCacheDescribe
-	config.DescriptionCacheCapacity = 1024
-
-	testPgbouncer(t, config, 10, 100)
-}
-
-func TestPgbouncerSimpleProtocol(t *testing.T) {
-	connString := os.Getenv(gaussdbgo.EnvGaussdbTestPgbouncerConnString)
-	if connString == "" {
-		t.Skipf("Skipping due to missing environment variable %v", gaussdbgo.EnvGaussdbTestPgbouncerConnString)
-	}
-
-	config := mustParseConfig(t, connString)
-	config.DefaultQueryExecMode = gaussdbgo.QueryExecModeSimpleProtocol
-
-	testPgbouncer(t, config, 10, 100)
-}
 
 func testPgbouncer(t *testing.T, config *gaussdbgo.ConnConfig, workers, iterations int) {
 	doneChan := make(chan struct{})

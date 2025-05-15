@@ -29,9 +29,6 @@ import (
 	"github.com/HuaweiCloudDeveloper/gaussdb-go/internal/gaussdbmock"
 )
 
-// TODO: remove pgbouncer?
-const pgbouncerConnStringEnvVar = gaussdbgo.EnvGaussdbTestPgbouncerConnString
-
 func TestConnect(t *testing.T) {
 	tests := []struct {
 		name string
@@ -2348,17 +2345,6 @@ func TestConnContextCanceledCancelsRunningQueryOnServer(t *testing.T) {
 		t.Parallel()
 
 		testConnContextCanceledCancelsRunningQueryOnServer(t, os.Getenv(gaussdbgo.EnvGaussdbTestDatabase), "postgres")
-	})
-
-	t.Run("pgbouncer", func(t *testing.T) {
-		t.Parallel()
-
-		connString := os.Getenv(pgbouncerConnStringEnvVar)
-		if connString == "" {
-			t.Skipf("Skipping due to missing environment variable %v", pgbouncerConnStringEnvVar)
-		}
-
-		testConnContextCanceledCancelsRunningQueryOnServer(t, connString, "pgbouncer")
 	})
 }
 

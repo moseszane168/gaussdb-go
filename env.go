@@ -8,7 +8,6 @@ const (
 	EnvGaussdbBenchSelectRowsCounts   = "GAUSSDB_BENCH_SELECT_ROWS_COUNTS"
 	EnvGaussdbSslPassword             = "GAUSSDB_SSL_PASSWORD"
 	EnvGaussdbTestCratedbConnString   = "GAUSSDB_TEST_CRATEDB_CONN_STRING"
-	EnvGaussdbTestPgbouncerConnString = "GAUSSDB_TEST_PGBOUNCER_CONN_STRING"
 	EnvGaussdbTestStressFactor        = "GAUSSDB_TEST_STRESS_FACTOR"
 	EnvGaussdbTestTcpConnString       = "GAUSSDB_TEST_TCP_CONN_STRING"
 	EnvGaussdbTestTlsClientConnString = "GAUSSDB_TEST_TLS_CLIENT_CONN_STRING"
