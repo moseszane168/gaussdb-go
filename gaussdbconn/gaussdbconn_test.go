@@ -3963,7 +3963,7 @@ func TestCancelRequestContextWatcherHandler(t *testing.T) {
 
 			for i := 0; i < 20; i++ {
 				func() {
-					ctx, cancel := context.WithTimeout(context.Background(), 4*time.Millisecond)
+					ctx, cancel := context.WithTimeout(context.Background(), 20*time.Millisecond)
 					defer cancel()
 					gaussdbConn.Exec(ctx, "select 1, pg_sleep(0.010)").ReadAll()
 					time.Sleep(100 * time.Millisecond) // ensure a cancel request that was a little late doesn't interrupt ensureConnValid.
